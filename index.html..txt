@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>East Africa Garden | Elevated Dining in Mekele</title>
+    <meta name="description" content="Experience premium dining with breathtaking views at East Africa Garden in Mekele.">
+    
+    <!-- Google Fonts: Playfair Display for Elegant Headings, Inter for clean body -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Tailwind CSS via CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        // Dark/Earthy Palette inspired by reference images (e.g. Página web burger.jpg)
+                        base: {
+                            900: '#0a0a0a', // Deepest black/charcoal
+                            800: '#141414', // Section backgrounds
+                            700: '#222222', // Card backgrounds
+                        },
+                        accent: {
+                            terracotta: '#D97706', // Warm sunset amber/orange
+                            garden: '#4D7C0F',    // Lush green
+                            gold: '#D4AF37'       // Luxury touch
+                        },
+                        text: {
+                            light: '#F9FAFB',
+                            muted: '#9CA3AF'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif'],
+                    },
+                    backgroundImage: {
+                        'hero-pattern': "linear-gradient(to right bottom, rgba(10, 10, 10, 0.9), rgba(10, 10, 10, 0.6)), url('photo_2026-07-06_02-36-20.jpg')",
+                        'texture': "url('https://www.transparenttextures.com/patterns/stardust.png')"
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Custom CSS for visual excellence */
+        body {
+            background-color: #0a0a0a;
+            color: #F9FAFB;
+            overflow-x: hidden;
+        }
+
+        /* Smooth floating animation for hero elements */
+        @keyframes float {
+            0% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-15px) rotate(1deg); }
+            100% { transform: translateY(0px) rotate(0deg); }
+        }
+        .animate-float {
+            animation: float 6s ease-in-out infinite;
+        }
+
+        /* Subtler float for background elements */
+        @keyframes float-slow {
+            0% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-8px) rotate(-1deg); }
+            100% { transform: translateY(0px) rotate(0deg); }
+        }
+        .animate-float-slow {
+            animation: float-slow 8s ease-in-out infinite;
+        }
+
+        /* Glowing text effect from Burger reference */
+        .glow-text {
+            text-shadow: 0 0 15px rgba(217, 119, 6, 0.6);
+        }
+
+        /* Glassmorphism utilities */
+        .glass {
+            background: rgba(20, 20, 20, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        /* Hide scrollbar but keep functionality */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0a0a0a;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #333;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #D97706;
+        }
+
+        /* Intersection Observer Fade In */
+        .fade-in-section {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+            will-change: opacity, visibility;
+        }
+        .fade-in-section.is-visible {
+            opacity: 1;
+            transform: none;
+        }
+
+        /* 3D Transform Utilities for Vanilla JS Tilt Effect */
+        .tilt-card {
+            transform-style: preserve-3d;
+            transform: perspective(1000px);
+        }
+        .tilt-content {
+            transform: translateZ(40px);
+        }
+    </style>
+</head>
+<body class="antialiased selection:bg-accent-terracotta selection:text-white font-sans relative">
+
+    <div class="fixed inset-0 pointer-events-none opacity-20 bg-texture z-0"></div>
+
+    <!-- Sticky Navigation Bar -->
+    <nav id="navbar" class="fixed w-full z-50 transition-all duration-300 py-4 glass">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center">
+                <!-- Site Brand Logo -->
+                <div class="flex-shrink-0 flex items-center cursor-pointer">
+                    <span class="font-serif text-2xl font-bold tracking-wider text-text-light">
+                        EAST AFRICA <span class="text-accent-terracotta italic">Garden</span>
+                    </span>
+                </div>
+                
+                <!-- Desktop Quick Actions -->
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="#home" class="text-sm font-medium text-text-light hover:text-accent-terracotta transition-colors">Home</a>
+                    <a href="#contact" class="text-sm font-medium text-text-light hover:text-accent-terracotta transition-colors">Contact Us</a>
+                    
+                    <!-- Order Now Hotline Button -->
+                    <a href="tel:0929397325" class="inline-flex items-center justify-center px-6 py-2.5 border border-transparent text-sm font-medium rounded-full text-white bg-accent-terracotta hover:bg-orange-700 shadow-[0_0_15px_rgba(217,119,6,0.4)] transition-all duration-300 transform hover:scale-105">
+                        <i class="fas fa-phone-alt mr-2 text-xs"></i> Order Now: 0929397325
+                    </a>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <div class="md:hidden flex items-center">
+                    <button id="mobile-menu-btn" class="text-text-light hover:text-accent-terracotta focus:outline-none p-2">
+                        <i class="fas fa-bars text-2xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Dynamic Menu (Standard collapsed state) -->
+        <div id="mobile-menu" class="hidden md:hidden absolute w-full bg-base-900 border-t border-gray-800 shadow-xl">
+            <div class="px-4 pt-2 pb-6 space-y-1">
+                <a href="#home" class="block px-3 py-3 text-base font-medium text-text-light hover:text-accent-terracotta hover:bg-base-800 rounded-md">Home</a>
+                <a href="#contact" class="block px-3 py-3 text-base font-medium text-text-light hover:text-accent-terracotta hover:bg-base-800 rounded-md">Contact Us</a>
+                <a href="tel:0929397325" class="block w-full text-center mt-4 px-6 py-3 border border-transparent text-base font-medium rounded-full text-white bg-accent-terracotta shadow-lg">
+                    <i class="fas fa-phone-alt mr-2"></i> Order Now: 0929397325
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <section id="home" class="relative w-full h-screen flex items-center justify-center overflow-hidden bg-hero-pattern bg-cover bg-center bg-no-repeat bg-fixed z-10">
+        <!-- Depth gradient overlay to safeguard visual contrast -->
+        <div class="absolute inset-0 bg-gradient-to-b from-base-900/60 via-base-900/40 to-base-900/95"></div>
+
+        <div class="relative z-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between w-full h-full pt-20">
+            <!-- Brand introduction content -->
+            <div class="w-full md:w-1/2 text-center md:text-left flex flex-col items-center md:items-start justify-center h-full">
+                <span class="uppercase tracking-[0.3em] text-accent-terracotta font-semibold text-sm mb-4 block glow-text">Mekele's Premier Destination</span>
+                <h1 class="font-serif text-5xl md:text-7xl lg:text-8xl font-bold leading-tight mb-6">
+                    Taste the <br>
+                    <span class="italic font-light text-accent-garden">Garden.</span>
+                </h1>
+                <p class="mt-4 text-lg md:text-xl text-text-muted max-w-lg mb-8 font-light">
+                    Join us for unforgettable food, great moments, and a welcoming atmosphere.
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4">
+                    <a href="tel:0929397325" class="px-8 py-4 bg-accent-terracotta text-white rounded-full font-medium shadow-[0_0_20px_rgba(217,119,6,0.5)] hover:shadow-[0_0_30px_rgba(217,119,6,0.8)] transition-all hover:-translate-y-1 flex items-center justify-center gap-2">
+                        <i class="fas fa-phone-alt"></i> Order Now: 0929397325
+                    </a>
+                    <a href="#contact" class="px-8 py-4 border border-white/20 text-white rounded-full font-medium hover:bg-white/10 transition-all backdrop-blur-sm flex items-center justify-center">
+                        Contact Us
+                    </a>
+                </div>
+            </div>
+
+            <!-- Elevated floating artwork preview -->
+            <div class="w-full md:w-1/2 hidden md:flex justify-center items-center h-full relative">
+                <div class="absolute w-64 h-64 bg-accent-terracotta/20 rounded-full blur-[100px]"></div>
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSbZDKlX89i15gOveQsdxAezvxUGndwACpTc6P3XcCKWw&s=10" 
+                     alt="Featured Signature Dish" 
+                     class="w-3/4 max-w-md rounded-2xl shadow-[0_35px_60px_-15px_rgba(0,0,0,0.8)] animate-float border-[8px] border-base-800/50 object-cover aspect-[4/5]">
+                
+                <div class="absolute top-1/4 left-10 bg-base-800/80 backdrop-blur-md border border-white/10 p-4 rounded-xl animate-float-slow shadow-xl">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-full bg-accent-garden flex items-center justify-center text-white">
+                            <i class="fas fa-leaf"></i>
+                        </div>
+                        <div>
+                            <p class="text-xs text-text-muted uppercase">Atmosphere</p>
+                            <p class="text-sm font-bold">100% Organic</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 z-20 flex flex-col items-center animate-bounce opacity-70">
+            <span class="text-xs tracking-widest uppercase mb-2">Scroll</span>
+            <i class="fas fa-chevron-down"></i>
+        </div>
+    </section>
+
+    <section id="tiktok" class="py-24 bg-base-900 relative z-10 overflow-hidden">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16 fade-in-section">
+                <span class="text-accent-terracotta font-serif italic text-xl mb-2 block font-medium">Follow Our Journey</span>
+                <h2 class="text-4xl md:text-5xl font-serif font-bold text-white">Latest TikTok Videos</h2>
+                <div class="w-24 h-1 bg-accent-terracotta mx-auto mt-6 rounded-full"></div>
+            </div>
+
+            <!-- Responsive TikTok Video Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-10 max-w-4xl mx-auto items-start fade-in-section">
+                
+                <!-- Video 1 -->
+                <div class="w-full bg-base-800/80 rounded-3xl overflow-hidden shadow-2xl border border-white/5 hover:border-accent-terracotta/50 transition-colors duration-500 flex justify-center">
+                    <blockquote class="tiktok-embed w-full m-0" cite="https://www.tiktok.com/@east.africa.garden/video/7640105872873557266" data-video-id="7640105872873557266" style="max-width: 100%; min-width: 100%;">
+                        <section><a target="_blank" title="@east.africa.garden" href="https://www.tiktok.com/@east.africa.garden">@east.africa.garden</a></section>
+                    </blockquote>
+                </div>
+
+                <!-- Video 2 (Photo Highlight) -->
+                <div class="w-full bg-base-800/80 rounded-3xl overflow-hidden shadow-2xl border border-white/5 hover:border-[#25F4EE]/50 transition-colors duration-500 flex justify-center">
+                    <blockquote class="tiktok-embed w-full m-0" cite="https://www.tiktok.com/@east.africa.garden/video/7614520600677059848" data-video-id="7614520600677059848" style="max-width: 100%; min-width: 100%;">
+                        <section><a target="_blank" title="@east.africa.garden" href="https://www.tiktok.com/@east.africa.garden">@east.africa.garden</a></section>
+                    </blockquote>
+                </div>
+
+            </div>
+            
+            <div class="text-center mt-12 fade-in-section">
+                <a href="https://www.tiktok.com/@east.africa.garden" target="_blank" class="inline-flex items-center justify-center px-8 py-3 border border-white/20 text-sm font-medium rounded-full text-white bg-black/50 hover:bg-black hover:border-white shadow-[0_0_15px_rgba(255,255,255,0.05)] hover:shadow-[0_0_20px_rgba(255,255,255,0.2)] transition-all duration-300 group">
+                    <i class="fab fa-tiktok text-lg mr-2 group-hover:text-[#25F4EE] transition-colors"></i> View Profile on TikTok
+                </a>
+            </div>
+            
+            <!-- TikTok Embed Script Generator -->
+            <script async src="https://www.tiktok.com/embed.js"></script>
+        </div>
+    </section>
+
+    <section id="menu" class="py-24 bg-base-800 relative z-10 border-t border-base-700">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="text-center mb-16 fade-in-section">
+                <span class="text-accent-terracotta font-serif italic text-xl mb-2 block font-medium">Curated Selection</span>
+                <h2 class="text-4xl md:text-5xl font-serif font-bold text-white">Featured Signatures</h2>
+                <div class="w-24 h-1 bg-accent-terracotta mx-auto mt-6 rounded-full"></div>
+            </div>
+
+            <!-- Signature Foods Catalog Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                
+                <!-- Plate 1: Traditional Mahberawi Platter -->
+                <div class="tilt-card glass rounded-2xl p-6 cursor-pointer group fade-in-section border border-white/5 hover:border-accent-terracotta/50 transition-colors duration-300">
+                    <div class="tilt-content flex flex-col h-full">
+                        <div class="relative w-full h-56 mb-6 rounded-xl overflow-hidden shadow-2xl">
+                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQKFpTsJzgUONSok6jPkFyebD5wsVPz4u-rBSkPivJ6HA&s=10" alt="Traditional Mahberawi Platter" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                        </div>
+                        <h3 class="text-xl font-serif font-bold text-white mb-2">Mahberawi Platter</h3>
+                        <p class="text-text-muted text-sm flex-grow mb-4">
+                            A classic premium platter combining slow-cooked local meats, spiced legumes, and colorful raw veggies, beautifully arranged on soft, sour injera bread.
+                        </p>
+                        <a href="tel:0929397325" class="w-full block text-center py-3 bg-base-700 hover:bg-accent-terracotta text-white rounded-lg text-sm font-medium transition-colors">
+                            <i class="fas fa-phone-alt mr-2 text-xs"></i> Order Now
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Plate 2: Tibs Selection -->
+                <div class="tilt-card glass rounded-2xl p-6 cursor-pointer group fade-in-section border border-white/5 hover:border-accent-terracotta/50 transition-colors duration-300 delay-100">
+                    <div class="tilt-content flex flex-col h-full">
+                        <div class="relative w-full h-56 mb-6 rounded-xl overflow-hidden shadow-2xl">
+                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTHm4yx4EDaq05lTVv0HncrvHhkOXXtO3_t_RRx2yDmKw&s=10" alt="Special Tibs Assortment" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                        </div>
+                        <h3 class="text-xl font-serif font-bold text-white mb-2">Special Tibs Assortment</h3>
+                        <p class="text-text-muted text-sm flex-grow mb-4">
+                            Prime cuts of lean meat sauteed with sliced garlic, red onions, and hot green peppers. Finished with rosemary twigs for an exquisite table-side scent.
+                        </p>
+                        <a href="tel:0929397325" class="w-full block text-center py-3 bg-base-700 hover:bg-accent-terracotta text-white rounded-lg text-sm font-medium transition-colors">
+                            <i class="fas fa-phone-alt mr-2 text-xs"></i> Order Now
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Plate 3: Vegan Platter -->
+                <div class="tilt-card glass rounded-2xl p-6 cursor-pointer group fade-in-section border border-white/5 hover:border-accent-garden/50 transition-colors duration-300 delay-200">
+                    <div class="tilt-content flex flex-col h-full">
+                        <div class="relative w-full h-56 mb-6 rounded-xl overflow-hidden shadow-2xl">
+                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRc6v5u6nD9902jfIgJxnVaEYXzmOHMC6xGJyrCVl95MA&s=10" alt="Organic Beyaynetu" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                        </div>
+                        <h3 class="text-xl font-serif font-bold text-white mb-2">Organic Beyaynetu</h3>
+                        <p class="text-text-muted text-sm flex-grow mb-4">
+                            A colorful mix of pure vegan fast-day classic stews, featuring savory split pea, spiced lentils, collard greens, and hand-mashed local legumes.
+                        </p>
+                        <a href="tel:0929397325" class="w-full block text-center py-3 bg-base-700 hover:bg-accent-garden text-white rounded-lg text-sm font-medium transition-colors">
+                            <i class="fas fa-phone-alt mr-2 text-xs"></i> Order Now
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Plate 4: Classic Layered Smoothies -->
+                <div class="tilt-card glass rounded-2xl p-6 cursor-pointer group fade-in-section border border-white/5 hover:border-accent-gold/50 transition-colors duration-300">
+                    <div class="tilt-content flex flex-col h-full">
+                        <div class="relative w-full h-56 mb-6 rounded-xl overflow-hidden shadow-2xl">
+                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSzSySBEw9y_zW3vUoSj_bYQwKSVhew16isvXKWyeXfXA&s=10" alt="Layered Avocado Smoothies" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                        </div>
+                        <h3 class="text-xl font-serif font-bold text-white mb-2">Layered Garden Smoothies</h3>
+                        <p class="text-text-muted text-sm flex-grow mb-4">
+                            Rich, naturally sweetened layered smoothies composed of fresh, thick organic avocado, sweet tropical mango, and ripe papaya purees.
+                        </p>
+                        <a href="tel:0929397325" class="w-full block text-center py-3 bg-base-700 hover:bg-accent-gold text-white rounded-lg text-sm font-medium transition-colors">
+                            <i class="fas fa-phone-alt mr-2 text-xs"></i> Order Now
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Plate 5: Botanical Sunset Cocktails -->
+                <div class="tilt-card glass rounded-2xl p-6 cursor-pointer group fade-in-section border border-white/5 hover:border-accent-gold/50 transition-colors duration-300 delay-100">
+                    <div class="tilt-content flex flex-col h-full">
+                        <div class="relative w-full h-56 mb-6 rounded-xl overflow-hidden shadow-2xl">
+                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRD1PPfM4t7lwUFGKmdlMxTcVGHDiVyifJWsYhn0nimQA&s=10" alt="Sunset Cocktails" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                        </div>
+                        <h3 class="text-xl font-serif font-bold text-white mb-2">Botanical Sunset Craft</h3>
+                        <p class="text-text-muted text-sm flex-grow mb-4">
+                            A refreshing botanical punch blended to copy the shades of Mekele's famous golden sunsets, featuring local mountain berries, wild lime, and citrus essences.
+                        </p>
+                        <a href="tel:0929397325" class="w-full block text-center py-3 bg-base-700 hover:bg-accent-gold text-white rounded-lg text-sm font-medium transition-colors">
+                            <i class="fas fa-phone-alt mr-2 text-xs"></i> Order Now
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Plate 6: Rustic Ribs and Local Bread -->
+                <div class="tilt-card glass rounded-2xl p-6 cursor-pointer group fade-in-section border border-white/5 hover:border-accent-terracotta/50 transition-colors duration-300">
+                    <div class="tilt-content flex flex-col h-full">
+                        <div class="relative w-full h-56 mb-6 rounded-xl overflow-hidden shadow-2xl">
+                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTbucILPndZEpPBUwApuYyOnaIE6wA2NnxQm9mNGBoRKA&s=10" alt="Rustic Ribs" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                        </div>
+                        <h3 class="text-xl font-serif font-bold text-white mb-2">Rustic Ribs & Artisan Bread</h3>
+                        <p class="text-text-muted text-sm flex-grow mb-4">
+                            Tender, spiced pan-seared rib chops coated in native mountain herbs, paired with locally-baked classic white country loaf slices.
+                        </p>
+                        <a href="tel:0929397325" class="w-full block text-center py-3 bg-base-700 hover:bg-accent-terracotta text-white rounded-lg text-sm font-medium transition-colors">
+                            <i class="fas fa-phone-alt mr-2 text-xs"></i> Order Now
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Plate 7: Festive Chicken Stew -->
+                <div class="tilt-card glass rounded-2xl p-6 cursor-pointer group fade-in-section border border-white/5 hover:border-accent-terracotta/50 transition-colors duration-300 delay-100">
+                    <div class="tilt-content flex flex-col h-full">
+                        <div class="relative w-full h-56 mb-6 rounded-xl overflow-hidden shadow-2xl">
+                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRp0AF7HAibUH8zl3SEqDZurr8XaJxAsyIv_xD8CvRnwQ&s=10" alt="Festive Doro Wot" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                        </div>
+                        <h3 class="text-xl font-serif font-bold text-white mb-2">Traditional Festive Doro Wot</h3>
+                        <p class="text-text-muted text-sm flex-grow mb-4">
+                            Savoury chicken pieces simmered for hours in aromatic red pepper berbere paste, served with hard-boiled eggs, spiced local butter, and creamy cottage cheese.
+                        </p>
+                        <a href="tel:0929397325" class="w-full block text-center py-3 bg-base-700 hover:bg-accent-terracotta text-white rounded-lg text-sm font-medium transition-colors">
+                            <i class="fas fa-phone-alt mr-2 text-xs"></i> Order Now
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Plate 8: Breakfast Enjera Scramble -->
+                <div class="tilt-card glass rounded-2xl p-6 cursor-pointer group fade-in-section border border-white/5 hover:border-accent-garden/50 transition-colors duration-300 delay-200">
+                    <div class="tilt-content flex flex-col h-full">
+                        <div class="relative w-full h-56 mb-6 rounded-xl overflow-hidden shadow-2xl">
+                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRw-Y4PBP5bKuJiKHWq1DKFuPBIQhvX0pfElVoV8uNUsA&s=10" alt="Enjera Egg Scramble" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                        </div>
+                        <h3 class="text-xl font-serif font-bold text-white mb-2">Enjera Egg Scramble Medley</h3>
+                        <p class="text-text-muted text-sm flex-grow mb-4">
+                            Soft, buttery scrambled eggs seasoned with fresh tomatoes, red onions, and hot jalapeño slivers, plated next to fresh rolled local sourdough injera.
+                        </p>
+                        <a href="tel:0929397325" class="w-full block text-center py-3 bg-base-700 hover:bg-accent-garden text-white rounded-lg text-sm font-medium transition-colors">
+                            <i class="fas fa-phone-alt mr-2 text-xs"></i> Order Now
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Plate 9: Hot Pot Shiro Tegabino -->
+                <div class="tilt-card glass rounded-2xl p-6 cursor-pointer group fade-in-section border border-white/5 hover:border-accent-garden/50 transition-colors duration-300">
+                    <div class="tilt-content flex flex-col h-full">
+                        <div class="relative w-full h-56 mb-6 rounded-xl overflow-hidden shadow-2xl">
+                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQLIsHEiTTUVV1De4QaeiRTUFdZgLPVnVMxHvi0vjJ-gQ&s=10" alt="Shiro Tegabino clay-pot" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                        </div>
+                        <h3 class="text-xl font-serif font-bold text-white mb-2">Clay-Pot Shiro Tegabino</h3>
+                        <p class="text-text-muted text-sm flex-grow mb-4">
+                            A rich chickpea-flour purée slow-simmered with garlic cloves, local onions, and berbere spice, served sizzling in a classic Ethiopian clay cook pot.
+                        </p>
+                        <a href="tel:0929397325" class="w-full block text-center py-3 bg-base-700 hover:bg-accent-garden text-white rounded-lg text-sm font-medium transition-colors">
+                            <i class="fas fa-phone-alt mr-2 text-xs"></i> Order Now
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Plate 10: Multi-Layer Sunrise Smoothie -->
+                <div class="tilt-card glass rounded-2xl p-6 cursor-pointer group fade-in-section border border-white/5 hover:border-accent-gold/50 transition-colors duration-300 delay-100">
+                    <div class="tilt-content flex flex-col h-full">
+                        <div class="relative w-full h-56 mb-6 rounded-xl overflow-hidden shadow-2xl">
+                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQWq5zHaGkb4O2tBlTcrPyd9A5EkQkX2SobaOwcuLSLxg&s=10" alt="Triple-Decker Sunrise Smoothie" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                        </div>
+                        <h3 class="text-xl font-serif font-bold text-white mb-2">Triple-Decker Sunrise Mocktail</h3>
+                        <p class="text-text-muted text-sm flex-grow mb-4">
+                            A visual and sweet masterpiece combining three dense tiers of fruit pulp: creamy organic avocado, ripe mango, and sweet summer strawberry purée.
+                        </p>
+                        <a href="tel:0929397325" class="w-full block text-center py-3 bg-base-700 hover:bg-accent-gold text-white rounded-lg text-sm font-medium transition-colors">
+                            <i class="fas fa-phone-alt mr-2 text-xs"></i> Order Now
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+            
+            <div class="text-center mt-12">
+                <a href="tel:0929397325" class="inline-flex items-center text-text-light hover:text-accent-terracotta font-medium transition-colors">
+                    Contact our team to see seasonal specials <i class="fas fa-arrow-right ml-2"></i>
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-8 text-left">
+                    <!-- Location Info -->
+                    <div class="flex flex-col items-center text-center gap-4">
+                        <div class="w-16 h-16 rounded-full bg-base-700 flex items-center justify-center text-accent-terracotta">
+                            <i class="fas fa-map-marker-alt text-2xl"></i>
+                        </div>
+                        <div>
+                            <h4 class="text-white font-bold mb-2">Location</h4>
+                            <p class="text-text-muted text-sm">FFRG+3Q4, Mekele<br>Tigray, Ethiopia</p>
+                        </div>
+                    </div>
+
+                    <!-- Direct Order Action Link -->
+                    <div class="flex flex-col items-center text-center gap-4">
+                        <div class="w-16 h-16 rounded-full bg-base-700 flex items-center justify-center text-accent-terracotta">
+                            <i class="fas fa-phone-alt text-2xl"></i>
+                        </div>
+                        <div>
+                            <h4 class="text-white font-bold mb-2">Order Now</h4>
+                            <a href="tel:0929397325" class="text-xl font-bold text-white hover:text-accent-terracotta transition-colors block mb-2">0929397325</a>
+                            <a href="https://wa.me/251929397325" target="_blank" class="inline-flex items-center text-xs font-bold text-green-500 hover:text-green-400 transition-colors">
+                                <i class="fab fa-whatsapp mr-1"></i> WhatsApp
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Open Hours -->
+                    <div class="flex flex-col items-center text-center gap-4">
+                        <div class="w-16 h-16 rounded-full bg-base-700 flex items-center justify-center text-accent-terracotta">
+                            <i class="fas fa-clock text-2xl"></i>
+                        </div>
+                        <div>
+                            <h4 class="text-white font-bold mb-2">Opening Hours</h4>
+                            <p class="text-text-muted text-sm">Monday - Sunday<br>11:00 AM - 11:30 PM</p>
+                        </div>
+                    </div>
+
+                    <!-- Social Media -->
+                    <div class="flex flex-col items-center text-center gap-4">
+                        <div class="w-16 h-16 rounded-full bg-base-700 flex items-center justify-center text-accent-terracotta">
+                            <i class="fab fa-tiktok text-2xl"></i>
+                        </div>
+                        <div>
+                            <h4 class="text-white font-bold mb-2">Social</h4>
+                            <a href="https://www.tiktok.com/@east.africa.garden?is_from_webapp=1&sender_device=pc" target="_blank" class="text-text-muted hover:text-[#25F4EE] transition-colors text-sm font-medium">@east.africa.garden</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-12 border-t border-white/5 pt-10">
+                    <a href="tel:0929397325" class="inline-flex items-center justify-center px-10 py-4 border border-transparent text-lg font-medium rounded-full text-white bg-accent-terracotta hover:bg-orange-700 shadow-[0_0_20px_rgba(217,119,6,0.5)] transition-all duration-300 transform hover:scale-105">
+                        <i class="fas fa-phone-alt mr-2"></i> Order Hotline: 0929397325
+                    </a>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Site Footer Section -->
+    <footer class="bg-black py-12 border-t border-white/10 relative z-10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                
+                <!-- Brand logo signature -->
+                <div class="mb-6 md:mb-0 text-center md:text-left">
+                    <span class="font-serif text-xl font-bold tracking-wider text-text-light">
+                        EAST AFRICA <span class="text-accent-terracotta italic">Garden</span>
+                    </span>
+                    <p class="text-text-muted text-xs mt-2">Elevated dining. Organic roots.</p>
+                </div>
+
+                <!-- Social Redirect Links -->
+                <div class="flex space-x-6 mb-6 md:mb-0">
+                    <a href="https://www.tiktok.com/@east.africa.garden" target="_blank" class="text-text-muted hover:text-[#25F4EE] transition-colors"><i class="fab fa-tiktok text-xl"></i></a>
+                    <a href="#" class="text-text-muted hover:text-white transition-colors"><i class="fab fa-instagram text-xl"></i></a>
+                    <a href="#" class="text-text-muted hover:text-white transition-colors"><i class="fab fa-facebook-f text-xl"></i></a>
+                </div>
+
+                <!-- Copyright Signature -->
+                <div class="text-text-muted text-sm text-center md:text-right">
+                    &copy; 2026 East Africa Garden. All rights reserved.
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            
+            // --- 1. Mobile Toggle Controller ---
+            const btn = document.getElementById('mobile-menu-btn');
+            const menu = document.getElementById('mobile-menu');
+            const icon = btn.querySelector('i');
+
+            btn.addEventListener('click', () => {
+                menu.classList.toggle('hidden');
+                if(menu.classList.contains('hidden')){
+                    icon.classList.remove('fa-times');
+                    icon.classList.add('fa-bars');
+                } else {
+                    icon.classList.remove('fa-bars');
+                    icon.classList.add('fa-times');
+                }
+            });
+
+            // Auto-collapse navigation grid on select
+            menu.querySelectorAll('a').forEach(link => {
+                link.addEventListener('click', () => {
+                    menu.classList.add('hidden');
+                    icon.classList.remove('fa-times');
+                    icon.classList.add('fa-bars');
+                });
+            });
+
+            // --- 2. Floating Navbar Scroll Adjustments ---
+            const navbar = document.getElementById('navbar');
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 50) {
+                    navbar.classList.add('shadow-lg', 'bg-base-900/90');
+                    navbar.classList.remove('py-4');
+                    navbar.classList.add('py-2');
+                } else {
+                    navbar.classList.remove('shadow-lg', 'bg-base-900/90');
+                    navbar.classList.add('py-4');
+                    navbar.classList.remove('py-2');
+                }
+            });
+
+            // --- 3. Lazy Scroll Observer Setup ---
+            const fadeElements = document.querySelectorAll('.fade-in-section');
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.15
+            };
+
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('is-visible');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, observerOptions);
+
+            fadeElements.forEach(el => {
+                observer.observe(el);
+            });
+
+            // --- 4. Interactive 3D Card Hover Rotator ---
+            const tiltCards = document.querySelectorAll('.tilt-card');
+            tiltCards.forEach(card => {
+                card.addEventListener('mousemove', handleTilt);
+                card.addEventListener('mouseleave', resetTilt);
+            });
+
+            function handleTilt(e) {
+                const card = this;
+                const cardRect = card.getBoundingClientRect();
+                
+                const x = e.clientX - cardRect.left;
+                const y = e.clientY - cardRect.top;
+                
+                const centerX = cardRect.width / 2;
+                const centerY = cardRect.height / 2;
+                
+                const rotateX = ((y - centerY) / centerY) * -10;
+                const rotateY = ((x - centerX) / centerX) * 10;
+                
+                card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
+                
+                const content = card.querySelector('.tilt-content');
+                if (content) {
+                    content.style.transform = `translateZ(50px) translateX(${rotateY * -0.5}px) translateY(${rotateX * 0.5}px)`;
+                }
+            }
+
+            function resetTilt(e) {
+                const card = this;
+                card.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)`;
+                card.style.transition = 'transform 0.5s cubic-bezier(0.23, 1, 0.32, 1)';
+                
+                const content = card.querySelector('.tilt-content');
+                if (content) {
+                    content.style.transform = 'translateZ(40px) translateX(0px) translateY(0px)';
+                    content.style.transition = 'transform 0.5s cubic-bezier(0.23, 1, 0.32, 1)';
+                }
+                
+                setTimeout(() => {
+                    card.style.transition = '';
+                    if(content) content.style.transition = '';
+                }, 500);
+            }
+        });
+    </script>
+</body>
+</html>
